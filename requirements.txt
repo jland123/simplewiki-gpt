@@ -1,0 +1,6 @@
+torch
+tiktoken
+tqdm
+matplotlib
+kagglehub
+notebook
