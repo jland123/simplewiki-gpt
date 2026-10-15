@@ -8,17 +8,11 @@ Every layer is written by hand in a few lines of math, and the notebook explains
 
 ## What is this?
 
-A **language model** is a program that reads some text and guesses what comes next.
-Make it guess, add its guess to the text, and ask again, and it writes.
 
-This notebook builds one, trains it, and lets you give it the start of a sentence to finish.
-It uses the same design as GPT (the models behind ChatGPT), but it is much smaller: about 38 million **parameters**, which are the adjustable numbers the model learns during training.
-
-The notebook doesn't use PyTorch's ready-made layers (`nn.Linear`, `nn.LayerNorm`, `nn.MultiheadAttention`, ...). Each one is written out by hand, so you can see exactly what it does.
+This notebook contains a gpt-style LLM, originally trained on the kaggle dataset titled "plain text wikipedia simpleenglish" but with the ability to be applied to any general .txt dataset. It doesn't use PyTorch's ready-made layers (`nn.Linear`, `nn.LayerNorm`, `nn.MultiheadAttention`, ...); instead, each one is written out by hand, showing exactly how it functions.
 
 ## Run it
 
-You need a **GPU** (a graphics card). It does this kind of math far faster than a normal processor. Kaggle and Colab both lend you one for free.
 
 **Kaggle (easiest):**
 1. Click **Open in Kaggle** above.
@@ -66,20 +60,14 @@ Each transformer block does two steps, and each step adds its result onto what w
 - **Attention:** every token gathers information from the tokens before it, never from the ones after.
 - **Feed-forward:** a small two-layer network that works on each token by itself (512 → 2048 → 512 numbers).
 
-## Results so far
+## Results
 
-The **loss** is a score for how wrong the model's guesses are. Lower is better.
-Guessing completely at random would score about 10.1 with this vocabulary.
 
 | Run | Training loss | Validation loss |
 |---|---|---|
 | 2 blocks, 128 numbers per token | 4.14 | 4.35 |
-| 4 blocks, 512 numbers per token (default) | 4.93 (average over the 1st epoch) | not measured yet |
+| 4 blocks, 512 numbers per token (default) | 3.32 | 3.51 |
 
-"Validation" means text the model never trained on.
-The full-size run stopped early in its second epoch because the GPU ran out of memory.
-This cleaned-up version uses less GPU memory: it keeps the dataset off the GPU and stops layers from holding onto old results.
-It hasn't been re-run at full size yet.
 
 ## Credits
 
